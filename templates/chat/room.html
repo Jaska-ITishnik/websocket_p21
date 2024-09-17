@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 600px;
+            height: 80vh;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background-color: #0088cc;
+            color: #fff;
+            padding: 15px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Chat Log (Messages Area) */
+        .chat-log {
+            padding: 10px;
+            flex-grow: 1;
+            overflow-y: auto;
+            border-top: 1px solid #eee;
+            background-color: #f9f9f9;
+            font-size: 14px;
+        }
+
+        .chat-log p {
+            margin: 0.5em 0;
+            padding: 10px;
+            border-radius: 10px;
+            width: fit-content;
+            max-width: 80%;
+            position: relative;
+        }
+
+        .chat-log p.user {
+            background-color: #e0f7fa;
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .chat-log p.bot {
+            background-color: #eeeeee;
+        }
+
+        /* Timestamp Style */
+        .timestamp {
+            font-size: 10px;
+            color: #888;
+        }
+
+        /* Chat Input Area */
+        .chat-input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background-color: #fff;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .chat-message-input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .chat-message-submit {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .chat-message-submit:hover {
+            background-color: #007bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            Chat Room: {{ room_name }}
+        </div>
+
+        <!-- Chat Log -->
+        <div class="chat-log" id="chat-log"></div>
+
+        <!-- Chat Input Area -->
+        <div class="chat-input-area">
+            <input id="chat-message-input" class="chat-message-input" type="text" placeholder="Type your message...">
+            <button id="chat-message-submit" class="chat-message-submit">Send</button>
+        </div>
+    </div>
+
+    {{ room_name|json_script:"room-name" }}
+    
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        // Function to get current time in HH:MM format
+        function getCurrentTime() {
+            const now = new Date();
+            return now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+        }
+
+        // Handle incoming messages
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const chatLog = document.getElementById('chat-log');
+            const message = document.createElement('p');
+            message.classList.add('bot'); // Bot by default, user class will be added for sent messages
+            message.textContent = data.message;
+
+            // Add <br> before timestamp
+            const timestamp = document.createElement('span');
+            timestamp.classList.add('timestamp');
+            timestamp.innerHTML = '<br>' + getCurrentTime(); // Break line before time
+            message.appendChild(timestamp);
+
+            chatLog.appendChild(message);
+            chatLog.scrollTop = chatLog.scrollHeight;  // Auto scroll to the latest message
+        };
+
+        // Handle socket closure
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        // Handle sending message on 'Enter' key press
+        document.getElementById('chat-message-input').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('chat-message-submit').click();
+            }
+        });
+
+        // Send message and clear input
+        document.getElementById('chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.getElementById('chat-message-input');
+            const message = messageInputDom.value;
+
+            if (message.trim()) {
+                chatSocket.send(JSON.stringify({
+                    'message': message
+                }));
+
+                const chatLog = document.getElementById('chat-log');
+                const messageElement = document.createElement('p');
+                messageElement.classList.add('user');
+                messageElement.textContent = message;
+
+                // Add <br> before timestamp
+                const timestamp = document.createElement('span');
+                timestamp.classList.add('timestamp');
+                timestamp.innerHTML = '<br>' + getCurrentTime(); // Break line before time
+                messageElement.appendChild(timestamp);
+
+                chatLog.appendChild(messageElement);
+                chatLog.scrollTop = chatLog.scrollHeight;  // Auto scroll to the latest message
+
+                messageInputDom.value = '';  // Clear input after sending
+            }
+        };
+    </script>
+</body>
+</html>
