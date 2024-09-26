@@ -1,0 +1,35 @@
+1) Websocket share file in group🟢
+2) Websocket one - to - one chat🟢
+3) Learn websocket more deeper
+
+put 🟢 for done task
+put ❌ for undone task (don't put it)
+
+
+
+jasurbek:
+    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4Mjg4MzM1LCJpYXQiOjE3MjY5OTIzMzUsImp0aSI6Ijk4ZGIzZTc5NTUwMDQ5ZjlhMzg4Y2ZhNmYzODk3NDA3IiwidXNlcl9pZCI6MX0.pyaYKDdl8FE91Bnwe_d_vJz8cSLoXM0tgEkA_0WTzu0
+    refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzA3ODczNSwiaWF0IjoxNzI2OTkyMzM1LCJqdGkiOiIyZDlhMzFhNmY5MWY0NTQzOTllMjE3YTM4ZTBjOWRkZiIsInVzZXJfaWQiOjF9.y3qmOThFAthT8wtMBIP1tZM7bjBlyxRjQJoZ1JFYDUw
+
+botirjon:
+    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4Mjg4Mjc4LCJpYXQiOjE3MjY5OTIyNzgsImp0aSI6IjMwYTE1ZjY5NzM3MDQ2YzM4ZjY0ZWZiNDY4M2U3NTgyIiwidXNlcl9pZCI6Mn0.BY9hkaese28wr6EI1Dewk1bl0gawsS4DOwBbJzrLesA
+    refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzA3ODY3OCwiaWF0IjoxNzI2OTkyMjc4LCJqdGkiOiJiZmE0OGViYzU0MzA0MGUyYTIxOGQxY2FkNTk1OGNmMSIsInVzZXJfaWQiOjJ9.SQt3HH5ifldaPMDKT_QKx9glN6fbZiyuILV8L3LfIfI
+
+
+alijon:
+    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjkwNjI2LCJpYXQiOjE3MjY5OTQ2MjYsImp0aSI6IjhkNDY4NGZjMWM2YjRlOTdiYTk2YzQ1MGZkNDYxNjY5IiwidXNlcl9pZCI6M30.hEpXwfd89fYVt_uHSlPcCbnpI7Xbd1-EfAfpt9Ks6-s
+    refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzA4MTAyNiwiaWF0IjoxNzI2OTk0NjI2LCJqdGkiOiI5MjljOWY2MGJlMjg0N2VkOTBjZTI0ZWEyZjEzMmIwMSIsInVzZXJfaWQiOjN9.5f5FyBHx4zpshCcM-fz_0g_sGEpsAkmglZ3A6GEUKJo
+
+'''
+chat
+group (n user)
+private (2 user)
+
+TASK
+Adding admin-only chat rooms.
+Sending the last ten messages to the user when they join a chat room.
+Allowing users to edit and delete messages.
+Adding '{user} is typing' functionality.
+Adding message reactions.
+
+'''
